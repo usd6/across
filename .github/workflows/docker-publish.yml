@@ -31,10 +31,10 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: ./docker/xray
-        file: ./docker/xray/Dockerfile
+        context: ./docker/xrayClient
+        file: ./docker/xrayClient/Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          blackmini/myx:latest
-          blackmini/myx:${{ github.sha }}
+          blackmini/xclient:latest
+          blackmini/xclient:${{ github.sha }}

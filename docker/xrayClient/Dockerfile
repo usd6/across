@@ -12,10 +12,11 @@ LABEL maintainer="Teddysun <i@teddysun.com>"
 WORKDIR /root
 COPY xray.sh /root/xray.sh
 COPY config.json /etc/xray/config.json
+COPY update_config.sh /root/update_config.sh
 RUN set -ex \
 	&& apk add --no-cache tzdata ca-certificates \
 	&& mkdir -p /var/log/xray /usr/share/xray \
-	&& chmod +x /root/xray.sh \
+	&& chmod +x /root/xray.sh /root/update_config.sh \
 	&& /root/xray.sh \
 	&& rm -fv /root/xray.sh \
 	&& wget -O /usr/share/xray/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat \
@@ -23,4 +24,4 @@ RUN set -ex \
 
 VOLUME /etc/xray
 ENV TZ=Asia/Shanghai
-CMD [ "/usr/bin/xray", "-config", "/etc/xray/config.json" ]
+CMD ["/bin/sh", "-c", "/root/update_config.sh && /usr/bin/xray -config /etc/xray/config-current.json"]
