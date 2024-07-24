@@ -5,6 +5,8 @@ on:
     # 每周二早上8点（北京时间）自动执行
     # UTC时间：每周二0:00（北京时间减去8小时）
     - cron: '0 0 * * 2'
+  workflow_dispatch:
+    # 允许从 Actions 选项卡手动触发工作流
 
 jobs:
   build-and-push:
