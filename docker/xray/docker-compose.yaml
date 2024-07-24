@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  newxrayclient:
+    image: myxray
+    environment:
+      - SERVER_ADDRESS=1.2.3.4
+      - SERVER_PORT=37046
+      - SERVER_UID=9f3a8907
+      - SERVER_SNI=www.microsoft.com
+      - SERVER_PUBLICKEY=NdYIAKk
+      - SERVER_SHORTID=4f2ac
+    ports:
+      - "12345:12345"
+      - "10808:10808"
+      - "2080:2080"
+      - "2087:2087"
+    restart: always

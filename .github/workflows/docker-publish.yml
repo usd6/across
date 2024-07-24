@@ -1,0 +1,38 @@
+name: Docker Publish
+
+on:
+  schedule:
+    # 每周二早上8点（北京时间）自动执行
+    # UTC时间：每周二0:00（北京时间减去8小时）
+    - cron: '0 0 * * 2'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: ./docker/xray
+        file: ./docker/xray/Dockerfile
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          blackmini/myx:latest
+          blackmini/myx:${{ github.sha }}
