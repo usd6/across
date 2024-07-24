@@ -31,8 +31,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: ./docker/xrayClient
-        file: ./docker/xrayClient/Dockerfile
+        context: ./docker/xrayclient
+        file: ./docker/xrayclient/Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
